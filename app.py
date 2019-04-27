@@ -32,7 +32,7 @@ def post_list():
 def post_detail(post_id):
     global posts
     post_id = int(post_id)
-    if posts[post_id - 1]:
+    if post_id <= len(posts):
         return template('post.html', post=posts[post_id - 1])
     else:
         return abort(404, f'Post {post_id} cannot be found')
