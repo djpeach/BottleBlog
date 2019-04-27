@@ -28,23 +28,24 @@ def post_detail(post_id):
 @get('/blog/post-form/<post_id>')
 def post_form(post_id=None):
     if post_id:
-        return f"Form to update post {post_id}"
+        return template('post-form.html')
     else:
-        return "Form to create new post"
+        return template('post-form.html')
 
 
 @post('/blog/post-form')
 @post('/blog/post-form/<post_id>')
 def post_form_submit(post_id=None):
+    global posts
     if post_id:
         print(f'updated existing post #{post_id}')
-        pass
     else:
-        print('created new post')
+        post_title = request.forms.postTitle
+        print(f'created new post: {post_title}')
+        posts.append(post_title)
         post_id = 'new_post_id'
-        pass
 
-    return redirect(f'/blog/{post_id}')
+    return redirect('/blog/')
 
 
 @post('/blog/post-delete/<post_id>')
