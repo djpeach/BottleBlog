@@ -82,7 +82,12 @@ def post_form_submit(post_id=None):
 
 @post('/blog/post-delete/<post_id>')
 def post_delete(post_id):
-    print(f'deleted post using using post id {post_id}')
+    global posts
+    post_id = int(post_id)
+    if post_id <= len(posts):
+        del posts[post_id - 1]
+    else:
+        abort(404, f'Post {post_id} cannot be found')
     return redirect('/blog')
 
 

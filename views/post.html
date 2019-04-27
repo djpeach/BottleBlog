@@ -13,6 +13,10 @@
 
 <p>Title: {{post['title']}}</p>
 
+<form action="/blog/post-delete/{{post['id']}}" method="POST">
+	<input type="submit" value="Delete Post">
+</form>
+
 
 </body>
 </html>
