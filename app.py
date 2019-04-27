@@ -41,10 +41,15 @@ def post_detail(post_id):
 @get('/blog/post-form')
 @get('/blog/post-form/<post_id>')
 def post_form(post_id=None):
+    global posts
     if post_id:
-        return template('post-form.html')
+        post_id = int(post_id)
+        if post_id <= len(posts):
+            return template('post-form.html', post=posts[post_id - 1])
+        else:
+            abort(404, f'Post {post_id} cannot be found')
     else:
-        return template('post-form.html')
+        return template('post-form.html', post=None)
 
 
 @post('/blog/post-form')
@@ -52,7 +57,15 @@ def post_form(post_id=None):
 def post_form_submit(post_id=None):
     global posts
     if post_id:
-        print(f'updated existing post #{post_id}')
+        post_id = int(post_id)
+        if post_id <= len(posts):
+            updated_post = {
+                'id': post_id,
+                'title': request.forms.postTitle
+            }
+            posts[post_id - 1] = updated_post
+        else:
+            abort(404, f'Post {post_id} cannot be found')
     else:
         post_title = request.forms.postTitle
         post_id = len(posts) + 1
