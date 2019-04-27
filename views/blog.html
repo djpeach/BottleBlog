@@ -12,7 +12,11 @@
 <h1>Welcome to my Blog</h1>
 
 % if posts:
-	<p>Going to render posts here</p>
+	<ul>
+		% for post in posts:
+			<li>{{post}}</li>
+		% end
+	</ul>
 % else:
 	<p>There are currently no posts, how about <a href="/blog/post-form/">adding one</a>?</p>
 % end

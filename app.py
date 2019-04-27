@@ -1,6 +1,6 @@
 from bottle import route, run, template, request, post, get, error, static_file, redirect, hook
 
-posts = ['post']
+posts = ['post1', 'post2']
 
 
 @hook('before_request')
