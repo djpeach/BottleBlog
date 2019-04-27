@@ -55,11 +55,16 @@ def post_form_submit(post_id=None):
         print(f'updated existing post #{post_id}')
     else:
         post_title = request.forms.postTitle
-        print(f'created new post: {post_title}')
-        posts.append(post_title)
-        post_id = 'new_post_id'
+        post_id = len(posts) + 1
 
-    return redirect('/blog/')
+        new_post = {
+            'id': post_id,
+            'title': post_title
+        }
+
+        posts.append(new_post)
+
+    return redirect(f'/blog/{post_id}')
 
 
 @post('/blog/post-delete/<post_id>')
