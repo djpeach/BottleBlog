@@ -1,5 +1,7 @@
 from bottle import route, run, template, request, post, get, error, static_file, redirect, hook
 
+posts = ['post']
+
 
 @hook('before_request')
 def strip_trailing_slash():
@@ -8,12 +10,13 @@ def strip_trailing_slash():
 
 @get('/')
 def index():
-    return "Hello World"
+    return template('index.html')
 
 
 @get('/blog')
 def post_list():
-    return "All Posts"
+    global posts
+    return template('blog.html', posts=posts)
 
 
 @get('/blog/<post_id>')
