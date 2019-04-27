@@ -1,6 +1,15 @@
-from bottle import route, run, template, request, post, get, error, static_file, redirect, hook
+from bottle import route, run, template, request, post, get, error, static_file, redirect, hook, abort
 
-posts = ['post1', 'post2']
+posts = [
+    {
+        'id': 1,
+        'title': 'Post 1'
+    },
+    {
+        'id': 2,
+        'title': 'Post 2'
+    }
+]
 
 
 @hook('before_request')
@@ -21,7 +30,12 @@ def post_list():
 
 @get('/blog/<post_id>')
 def post_detail(post_id):
-    return f"Details for {post_id}"
+    global posts
+    post_id = int(post_id)
+    if posts[post_id - 1]:
+        return template('post.html', post=posts[post_id - 1])
+    else:
+        return abort(404, f'Post {post_id} cannot be found')
 
 
 @get('/blog/post-form')

@@ -9,17 +9,10 @@
 </head>
 <body>
 
-<h1>Welcome to my Blog</h1>
+<h1>Details for post {{post['id']}}</h1>
 
-% if posts:
-	<ul>
-		% for post in posts:
-			<li>{{post['title']}}</li>
-		% end
-	</ul>
-% else:
-	<p>There are currently no posts, how about <a href="/blog/post-form/">adding one</a>?</p>
-% end
+<p>Title: {{post['title']}}</p>
+
 
 </body>
 </html>
