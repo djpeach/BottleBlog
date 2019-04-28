@@ -1,4 +1,4 @@
-from bottle import route, run, template, request, post, get, error, static_file, redirect, hook, abort
+from bottle import route, run, template, request, post, get, error, static_file, redirect, hook, abort, SimpleTemplate
 
 posts = [
     {
