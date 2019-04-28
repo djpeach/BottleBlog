@@ -6,8 +6,8 @@
 	<h1>Create a new post</h1>
 % end
 
-<form action="/blog/post-form/{{post['id'] if post else ''}}" method="POST">
-	<input type="text" name="postTitle" value="{{post['title'] if post else ''}}">
+<form action="/blog/post-form/{{post.id if post else ''}}" method="POST">
+	<input type="text" name="postTitle" value="{{post.title if post else ''}}">
 	<input type="submit">
 </form>
 
