@@ -17,15 +17,26 @@ def strip_trailing_slash():
     request.environ['PATH_INFO'] = request.environ['PATH_INFO'].rstrip('/')
 
 
+@route('/static/<filename>')
+def server_static(filename):
+    return static_file(filename, root="./static")
+
+
 @get('/')
 def index():
-    return template('index.html')
+    context = {
+        'active': 'index'
+    }
+    return template('index.html', **context)
 
 # Read (list)
 @get('/blog')
 def post_list():
     global posts
-    return template('blog.html', posts=posts)
+    context = {
+        'active': 'blog'
+    }
+    return template('blog.html', posts=posts, **context)
 
 # Read (detail)
 @get('/blog/<post_id>')
@@ -43,14 +54,17 @@ def post_detail(post_id):
 @get('/blog/post-form/<post_id>')
 def post_form(post_id=None):
     global posts
+    context = {
+        'active': 'post-form'
+    }
     if post_id:
         post_by_id = [post for post in posts if post['id'] == post_id]
         if len(post_by_id) > 0:
-            return template('post-form.html', post=post_by_id[0])
+            return template('post-form.html', post=post_by_id[0], **context)
         else:
             abort(404, f'Post {post_id} cannot be found')
     else:
-        return template('post-form.html', post=None)
+        return template('post-form.html', post=None, **context)
 
 # Create
 # Update

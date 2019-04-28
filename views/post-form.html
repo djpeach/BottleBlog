@@ -1,6 +1,10 @@
 % include('header.html')
 
-<h1>Create a new post</h1>
+% if post:
+	<h1>Update post</h1>
+% else:
+	<h1>Create a new post</h1>
+% end
 
 <form action="/blog/post-form/{{post['id'] if post else ''}}" method="POST">
 	<input type="text" name="postTitle" value="{{post['title'] if post else ''}}">

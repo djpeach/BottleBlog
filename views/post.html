@@ -4,8 +4,12 @@
 
 <p>Title: {{post['title']}}</p>
 
+<form action="/blog/post-form/{{post['id']}}" method="GET">
+	<button class="btn btn-sm btn-outline-success">Edit Post</button>
+</form>
+
 <form action="/blog/post-delete/{{post['id']}}" method="POST">
-	<input type="submit" value="Delete Post">
+	<button class="btn btn-sm btn-outline-danger">Delete Post</button>
 </form>
 
 % include('footer.html')
