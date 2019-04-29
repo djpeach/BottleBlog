@@ -1,14 +1,14 @@
 % include('header.html')
 
-<h1>Details for post {{post.id}}</h1>
+<h1>Details for post {{post['id']}}</h1>
 
-<p>Title: {{post.title}}</p>
+<p>Title: {{post['title']}}</p>
 
-<form action="/blog/post-form/{{post.id}}" method="GET">
+<form action="/blog/post-form/{{post['id']}}" method="GET">
 	<button class="btn btn-sm btn-outline-success">Edit Post</button>
 </form>
 
-<form action="/blog/post-delete/{{post.id}}" method="POST">
+<form action="/blog/post-delete/{{post['id']}}" method="POST">
 	<button class="btn btn-sm btn-outline-danger">Delete Post</button>
 </form>
 

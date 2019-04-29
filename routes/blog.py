@@ -1,6 +1,5 @@
 from bottle import get, post, template, abort, request, redirect
-from data.Post import posts
-from data.database import add_post
+from data.database import add_post, get_all_posts, get_post_by_id, update_post
 
 # Read (list)
 @get('/blog')
@@ -8,14 +7,15 @@ def post_list():
     context = {
         'active': 'blog'
     }
+    posts = get_all_posts()
     return template('blog.html', posts=posts, **context)
 
 # Read (detail)
 @get('/blog/<post_id>')
 def post_detail(post_id):
-    post_by_id = [post for post in posts if post.id == post_id]
-    if len(post_by_id) > 0:
-        return template('post.html', post=post_by_id[0])
+    post_by_id = get_post_by_id(post_id)
+    if post_by_id:
+        return template('post.html', post=post_by_id)
     else:
         return abort(404, f'Post {post_id} cannot be found')
 
@@ -28,9 +28,9 @@ def post_form(post_id=None):
         'active': 'post-form'
     }
     if post_id:
-        post_by_id = [post for post in posts if post.id == post_id]
-        if len(post_by_id) > 0:
-            return template('post-form.html', post=post_by_id[0], **context)
+        post_by_id = get_post_by_id(post_id)
+        if post_by_id:
+            return template('post-form.html', post=post_by_id, **context)
         else:
             abort(404, f'Post {post_id} cannot be found')
     else:
@@ -41,29 +41,12 @@ def post_form(post_id=None):
 @post('/blog/post-form')
 @post('/blog/post-form/<post_id>')
 def post_form_submit(post_id=None):
-    new_post = (request.forms.postTitle, )
-    return
     if post_id:
-        post_by_id = [post for post in posts if post.id == post_id]
-        if len(post_by_id) > 0:
-            post_index = posts.index(post_by_id[0])
-            updated_post = {
-                'id': post_id,
-                'title': request.forms.postTitle
-            }
-            posts[post_index] = updated_post
-        else:
-            abort(404, f'Post {post_id} cannot be found')
+        updated_post = (request.forms.postTitle, )
+        update_post(post_id, updated_post)
     else:
-        post_title = request.forms.postTitle
-        post_id = str(len(posts) + 1)
-
-        new_post = {
-            'id': post_id,
-            'title': post_title
-        }
-
-        posts.append(new_post)
+        new_post = (request.forms.postTitle, )
+        post_id = add_post(new_post)
 
     return redirect(f'/blog/{post_id}')
 
