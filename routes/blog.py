@@ -1,6 +1,5 @@
 from bottle import get, post, template, abort, request, redirect
-from data.Post import posts
-from data.database import add_post
+from data.database import add_post, get_all_posts, get_post_by_id
 
 # Read (list)
 @get('/blog')
@@ -8,14 +7,15 @@ def post_list():
     context = {
         'active': 'blog'
     }
+    posts = get_all_posts()
     return template('blog.html', posts=posts, **context)
 
 # Read (detail)
 @get('/blog/<post_id>')
 def post_detail(post_id):
-    post_by_id = [post for post in posts if post.id == post_id]
-    if len(post_by_id) > 0:
-        return template('post.html', post=post_by_id[0])
+    post_by_id = get_post_by_id(post_id)
+    if post_by_id:
+        return template('post.html', post=post_by_id)
     else:
         return abort(404, f'Post {post_id} cannot be found')
 
