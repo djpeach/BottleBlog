@@ -1,5 +1,6 @@
 from bottle import get, post, template, abort, request, redirect
 from data.Post import posts
+from data.database import add_post
 
 # Read (list)
 @get('/blog')
@@ -40,6 +41,8 @@ def post_form(post_id=None):
 @post('/blog/post-form')
 @post('/blog/post-form/<post_id>')
 def post_form_submit(post_id=None):
+    new_post = (request.forms.postTitle, )
+    return
     if post_id:
         post_by_id = [post for post in posts if post.id == post_id]
         if len(post_by_id) > 0:

@@ -1,14 +1,12 @@
 from bottle import run
 from routes import domain, blog
-from data.database import create_connection, create_table
+from data.database import create_table
 
 posts_table_creation = """ CREATE TABLE IF NOT EXISTS posts (
         id integer PRIMARY KEY,
         title text NOT NULL
         ); """
 
-
-create_connection()
 create_table(posts_table_creation)
 
 

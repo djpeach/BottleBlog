@@ -16,4 +16,5 @@ def index():
     context = {
         'active': 'index'
     }
+
     return template('index.html', **context)

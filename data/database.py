@@ -1,15 +1,15 @@
 import sqlite3
 
-conn = None
-c = None
-
-
-def create_connection():
-    global conn, c
-    conn = sqlite3.connect('blog.db')
-    c = conn.cursor()
-
 
 def create_table(sql):
-    global c
-    c.execute(sql)
+    conn = sqlite3.connect('blog.db')
+    cur = conn.cursor()
+    cur.execute(sql)
+
+
+def add_post(post):
+    conn = sqlite3.connect('blog.db')
+    cur = conn.cursor()
+    cur.execute(""" INSERT INTO posts (title) VALUES (?); """, post)
+    conn.commit()
+    return cur.lastrowid
