@@ -36,3 +36,10 @@ def update_post(id, post):
     cur = conn.cursor()
     cur.execute(""" UPDATE posts SET title=? WHERE id=? """, (*post, id))
     conn.commit()
+
+
+def delete_post(id):
+    conn = sqlite3.connect('blog.db')
+    cur = conn.cursor()
+    cur.execute(""" DELETE FROM posts WHERE id=? """, (id, ))
+    conn.commit()

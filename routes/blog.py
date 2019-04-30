@@ -1,5 +1,5 @@
 from bottle import get, post, template, abort, request, redirect
-from data.database import add_post, get_all_posts, get_post_by_id, update_post
+from data.database import add_post, get_all_posts, get_post_by_id, update_post, delete_post
 
 # Read (list)
 @get('/blog')
@@ -53,10 +53,5 @@ def post_form_submit(post_id=None):
 # Delete
 @post('/blog/post-delete/<post_id>')
 def post_delete(post_id):
-    post_by_id = [post for post in posts if post.id == post_id]
-    if len(post_by_id) > 0:
-        post_index = posts.index(post_by_id[0])
-        del posts[post_index]
-    else:
-        abort(404, f'Post {post_id} cannot be found')
+    delete_post(post_id)
     return redirect('/blog')
